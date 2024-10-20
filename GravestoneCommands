@@ -1,0 +1,52 @@
+package me.tony.main.voltnetwork.GravestoneUtil;
+
+import eu.decentsoftware.holograms.api.DHAPI;
+import me.tony.main.voltnetwork.VoltNetwork;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+public class Commands implements CommandExecutor {
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        Player p = (Player) sender;
+
+        String prefix = VoltNetwork.getInstance().getConfig().getString("prefix");
+
+        if (p.hasPermission(VoltNetwork.getInstance().getConfig().getString("administration_permission"))) {
+
+            // gravestone <remove> <player>
+
+            if (args.length == 2) {
+                String subCommand = args[0];
+                Player target = Bukkit.getPlayer(args[1]);
+
+                if (subCommand.equalsIgnoreCase("remove")) {
+                    if (DHAPI.getHologram(target.getName()) != null) {
+                        // Checks to see if any gravestone lists contain the player.
+                        if (StoreItems.SaveInv.containsKey(target)) StoreItems.SaveInv.remove(target);
+                        if (Gravestones.BlockLoc.containsKey(target)) Gravestones.BlockLoc.remove(target);
+                        if (Gravestones.Gravestone.containsKey(target)) Gravestones.Gravestone.remove(target);
+                        if (Gravestones.RemoveGrave.containsKey(target)) Gravestones.RemoveGrave.remove(target);
+
+                        // Removes bugged Hologram
+                        /*
+                        Hologram could bug either because the Player didn't remove all the Items from the Gravestone then broke the block.
+                        or Server lag.
+                         */
+                        DHAPI.removeHologram(target.getName());
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + " &7Removed Bugged Gravestone Hologram."));
+
+                    } else {
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + " &7That Gravestone doesn't exist!"));
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+}
