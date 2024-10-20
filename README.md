@@ -10,4 +10,5 @@ If there is any questions, or something you don't trust or something you even wa
 
 If everything looks okay, and we're good to go. Please let me know, and I will get the jar ready and send it.
 We may have to use a thirdparty website for downloads, depending how Discord wants to handle this (We can use Spigot if it comes down to it and I can make a private post)
+You can also download it from Github Directly, if you look on the right (If you're on PC) I don't know how it is on Mobile.
 
