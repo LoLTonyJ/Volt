@@ -1,0 +1,116 @@
+#######################################################################################################################
+#                                                                                                                     #
+#                                   GENERAL INFORMATION                                                               #
+#                                                                                                                     #
+#######################################################################################################################
+
+prefix: "&b&l&o[CoolPlugin]"
+administration_permission: "VoltNetwork.CE.Admin"
+
+# Permission used to reload the Plugins Configuration File.
+backend_permission: "VoltNetwork.Admin"
+
+
+#######################################################################################################################
+#                                                                                                                     #
+#                                   MESSAGES SECTION                                                                  #
+#                                                                                                                     #
+#######################################################################################################################
+
+apply_enchantment: "&7Please click the tool you'd like to enchant!"
+undo_enchantment: "&7You will no longer enchant the clicked item"
+error_remove_enchantment: "&cThis item does not have any Custom Enchantments to remove!"
+error_enchant: "&7You're already queued to enchant a tool!"
+cannot_enchant: "&7You cannot enchant this item with this enchantment"
+
+# What is displayed on the item when separating regular enchants and custom enchants.
+#
+#  EXAMPLE
+#
+# Sharpness III
+# Unbreaking III
+#
+# CUSTOM ENCHANTS
+# Harvest Yield I
+# Ore Yield I
+# etc.
+
+custom_enchant_separator: "&c&lCUSTOM ENCHANTS"
+
+#######################################################################################################################
+#                                                                                                                     #
+#                                   GRAVESTONE SECTION                                                                #
+#                                                                                                                     #
+#######################################################################################################################
+
+gravestone_enable: true
+
+# One of these has to be true, if both are false nothing will happen.
+# If a player clicks on a Gravestone that isn't theirs, it will either send them a Title, or Message with the co-ordinates of their Gravestone.
+
+sendtitle_gravestone_coords: true
+
+# %coords% is the only placeholder supported in this part.
+# Reason why is because I thought you'd like to customize the message later on.
+sendtitle_header: "&c&lThis is not your Gravestone!"
+sendtitle_footer: "&bYour Gravestone is at %coords%"
+
+# %coords% is the only placeholder supported in this part.
+# Reason why is because I thought you'd like to customize the message later on.
+sendmessage_gravestone_coords: false
+gravestone_coords_message: "&c&lThis is not your Gravestone! &bYour Gravestone is at %coords%"
+
+# For a list of placeholders, and how to install them, visit the link provided.
+# https://wiki.placeholderapi.com/users/placeholder-list/#player
+
+gravestone_title: "%player_displayname% gravestone"
+
+gravestone_message:
+  - "&7Right-Click to claim your items"
+  - "Another Line"
+  - "And Another one!"
+  -
+block_type: BARREL
+
+
+
+#######################################################################################################################
+#                                                                                                                     #
+#                                   DROP RATES                                                                        #
+#                                                                                                                     #
+#######################################################################################################################
+
+# Harvest Yield Drops
+
+# Will be added on to default drop amount
+# If it drops 2 naturally, it will drop an addition X amount.
+
+harvest_yield_lv1_min: 2
+harvest_yield_lv1_max: 5
+
+harvest_yield_lvl2_min: 4
+harvest_yield_lv2_max: 8
+
+
+
+#######################################################################################################################
+#                                                                                                                     #
+#                                   ENCHANTMENT CHECKS                                                                #
+#                                                                                                                     #
+#######################################################################################################################
+
+# If there is something you need, or have a question about please message Ghostinq on Discord.
+
+# Its recommended not to touch this if you don't know what you're doing.
+# This will check the item in the players hand and check and see if its allowed to be enchanted with a custom enchant
+
+# Whatever item is displayed here will allow players to enchant with Custom Enchants.
+# For a list of items, use this link -> https://minecraftitemids.com
+# Remove "minecraft:" before pasting into list.
+# !! ALL ITEMS ARE CASE SENSITIVE !!
+
+Harvest:
+  - NETHERITE_HOE
+  - DIAMOND_HOE
+  - IRON_HOE
+  - WOODEN_HOE
