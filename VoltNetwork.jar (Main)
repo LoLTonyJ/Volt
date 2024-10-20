@@ -1,0 +1,59 @@
+package me.tony.main.voltnetwork;
+
+import me.tony.main.voltnetwork.Administration.AdminUtil.ConfigCommands;
+import me.tony.main.voltnetwork.Administration.AdminUtil.ConfigReloadConfirm;
+import me.tony.main.voltnetwork.Administration.Commands;
+import me.tony.main.voltnetwork.EnchantmentUtil.EnchantmentAdd;
+import me.tony.main.voltnetwork.EnchantmentUtil.HarvestListener;
+import me.tony.main.voltnetwork.Enchantments.Harvest;
+import me.tony.main.voltnetwork.GravestoneUtil.Gravestones;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.logging.Level;
+
+public final class VoltNetwork extends JavaPlugin {
+
+    static VoltNetwork instance;
+
+    @Override
+    public void onEnable() {
+
+        instance = this;
+
+
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
+
+        getServer().getPluginManager().registerEvents(new Harvest(), this);
+        getServer().getPluginManager().registerEvents(new EnchantmentAdd(), this);
+        getServer().getPluginManager().registerEvents(new ConfigReloadConfirm(), this);
+        getServer().getPluginManager().registerEvents(new HarvestListener(), this);
+
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+
+            getServer().getPluginManager().registerEvents(new Gravestones(), this);
+
+            getCommand("vce").setExecutor(new Commands());
+            getCommand("cfg").setExecutor(new ConfigCommands());
+            getCommand("gravestone").setExecutor(new me.tony.main.voltnetwork.GravestoneUtil.Commands());
+
+            System.out.println("VoltNetwork v1.0.0 has been loaded Successfully \n If there is something wrong, please contact Ghostinq on Discord.");
+
+
+        } else {
+            getLogger().log(Level.SEVERE, "Could not find PlaceHolderAPI, please install the plugin!");
+            Bukkit.getPluginManager().disablePlugin(this);
+        }
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
+
+    public static VoltNetwork getInstance() {
+        return instance;
+    }
+
+}
