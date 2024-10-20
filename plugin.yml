@@ -1,0 +1,15 @@
+name: VoltNetwork
+version: '${project.version}'
+main: me.tony.main.voltnetwork.VoltNetwork
+api-version: '1.21'
+
+softdepend:
+  - DecentHolograms
+
+commands:
+  vce:
+    description: Custom Enchantment Main Command
+  cfg:
+    description: Configuration Main Command
+  gravestone:
+    description: Gravestone debug command.
