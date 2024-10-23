@@ -1,5 +1,18 @@
 package me.tony.main.voltnetwork.GravestoneUtil;
 
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.math.Vector3;
+import com.sk89q.worldedit.world.World;
+import com.sk89q.worldguard.LocalPlayer;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.association.RegionAssociable;
+import com.sk89q.worldguard.protection.flags.Flags;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
+import com.sk89q.worldguard.protection.regions.RegionQuery;
 import eu.decentsoftware.holograms.api.DHAPI;
 import me.tony.main.voltnetwork.VoltNetwork;
 import org.bukkit.ChatColor;
@@ -10,13 +23,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.PlayerInventory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Gravestones implements Listener {
 
@@ -25,6 +38,8 @@ public class Gravestones implements Listener {
     String titleFooter = VoltNetwork.getInstance().getConfig().getString("sendtitle_footer");
     Boolean sendMessage = VoltNetwork.getInstance().getConfig().getBoolean("sendmessage_gravestone_coords");
     String message = VoltNetwork.getInstance().getConfig().getString("gravestone_coords_message");
+    Boolean pvpGraveStone = VoltNetwork.getInstance().getConfig().getBoolean("drop_gravestone_inpvp");
+    String pvpRegion = VoltNetwork.getInstance().getConfig().getString("pvp_region_name");
 
     public static HashMap<Player, Material> RemoveGrave = new HashMap<>();
     public static HashMap<Player, Double> BlockLoc = new HashMap<>();
@@ -33,6 +48,11 @@ public class Gravestones implements Listener {
     public static HashMap<Player, Integer> XCoord = new HashMap<>();
     public static HashMap<Player, Integer> YCoord = new HashMap<>();
     public static HashMap<Player, Integer> ZCoord = new HashMap<>();
+
+    public ArrayList<Player> entered = new ArrayList<Player>();
+    public ArrayList<Player> left = new ArrayList<Player>();
+
+
 
 
     @EventHandler
@@ -43,7 +63,19 @@ public class Gravestones implements Listener {
         String GraveBlock = VoltNetwork.getInstance().getConfig().getString("block_type");
         Boolean graveEnable = VoltNetwork.getInstance().getConfig().getBoolean("gravestone_enable");
 
-        if (graveEnable.equals(false)) return;
+        // World Guard Coolness
+        LocalPlayer lp = WorldGuardPlugin.inst().wrapPlayer(p);
+        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+        RegionQuery query = container.createQuery();
+
+        // Checks if the Region they died in has the flag "PVP" enabled.
+        if (query.testState(lp.getLocation(), lp, Flags.PVP)) {
+            // Checks if "drop_gravestone_inpvp" is set to false
+            if (!pvpGraveStone) {
+                return;
+            }
+        }
+
 
         if (p.getInventory().getContents() != null) {
 
@@ -150,5 +182,6 @@ public class Gravestones implements Listener {
             }
         }
     }
+
 }
 
