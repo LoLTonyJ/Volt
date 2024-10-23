@@ -45,6 +45,13 @@ custom_enchant_separator: "&c&lCUSTOM ENCHANTS"
 
 gravestone_enable: true
 
+# If this is set to false, items will drop naturally, if its set to true a gravestone will be created for the player.
+drop_gravestone_inpvp: false
+
+# The pvp region name
+pvp_region_name: "pvp"
+
+
 # One of these has to be true, if both are false nothing will happen.
 # If a player clicks on a Gravestone that isn't theirs, it will either send them a Title, or Message with the co-ordinates of their Gravestone.
 
